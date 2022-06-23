@@ -2,7 +2,7 @@ import { ethers } from "hardhat";
 import * as dotenv from "dotenv";
 import { AddressList, CallCode, Greeter } from "../typechain";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { ContractTransaction, Wallet, BigNumberish, Overrides, Contract } from "ethers";
+import { ContractTransaction, Wallet, BigNumberish, Overrides } from "ethers";
 import { expect } from "chai";
 import { createAccounts, sendCube, expectSuccess, runResult, testCaseStart, testCaseEnd } from "./utils"
 
@@ -259,7 +259,6 @@ async function testBlacklist_Rule() {
   const transferSingle = async (from: Wallet, to: Wallet): Promise<String> => send(contract.connect(from).testERC1155TransferSingle, to.address);
   const transferBatch = async (from: Wallet, to: Wallet): Promise<String> => send(contract.connect(from).testERC1155TransferBatch, to.address);
 
-
   // blackFrom to none
   testCaseStart("blackFrom to none", 1);
   await addblack(accounts[0].address, DIR.From);
@@ -414,7 +413,6 @@ async function testBlacklist_Rule() {
   testCaseEnd("blackFrom to non without all rules", 1);
 }
 
-
 async function testDevVerify() {
   const account = (await createAccounts(admin, 1))[0]
 
@@ -426,8 +424,8 @@ async function testDevVerify() {
 
   const deployByEOA = async (signer: Wallet): Promise<string> => {
     try {
-      let contract = await contractFactory.connect(signer).deploy();
-      contract = await contract.deployed();
+      const contract = await contractFactory.connect(signer).deploy();
+      await contract.deployed();
       return "success";
     } catch (error: any) {
       return error.message;

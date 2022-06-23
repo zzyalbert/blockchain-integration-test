@@ -33,7 +33,7 @@
     "typescript": "^4.7.3"
   },
   "scripts": {
-    "addresslist": "yarn hardhat run scripts/addresslist_test.ts",
-    "onchaindao": "yarn hardhat run scripts/onchaindao_test.ts"
+    "addresslist": "yarn hardhat typechain && yarn hardhat run scripts/addresslist_test.ts",
+    "onchaindao": "yarn hardhat typechain && yarn hardhat run scripts/onchaindao_test.ts"
   }
 }
